@@ -21,6 +21,9 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Install VSCE
+      run: npm install -g vsce
+
     - name: Setup Xvfb
       run: |
         sudo apt-get install -y xvfb
@@ -30,7 +33,37 @@ jobs:
     - name: Run tests
       run: npm test
 
+    - name: Package extension
+      run: vsce package
+      id: package
+      env:
+        PACKAGE_NAME: tailwind-preview.vsix
+      shell: bash
+      run: |
+        vsce package
+        echo "::set-output name=vsix::$(ls *.vsix)"
+
     - name: Publish to VSCode Marketplace
-      uses: HaaLeo/publish-vscode-extension@v1.3.0
+      run: vsce publish -p ${{ secrets.VSCE_PAT }}
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # provided by Actions
       with:
-        pat: ${{ secrets.VSCE_PAT }}
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: ./${{ steps.package.outputs.vsix }}
+        asset_name: ${{ steps.package.outputs.vsix }}
+        asset_content_type: application/octet-stream
