@@ -1,0 +1,16 @@
+{
+  "name": "test-workspace",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "tailwindcss -i tailwind.css -o style.css",
+    "build:css:watch": "tailwindcss -i tailwind.css -o style.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.3.2"
+  }
+}

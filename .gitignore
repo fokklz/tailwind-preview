@@ -1,0 +1,28 @@
+# .gitignore for a VSCode Extension
+
+# Ignore node_modules directory
+node_modules/
+
+# Ignore VSCode tests
+.vscode-test/
+
+# Ignore output of tsc
+out/
+
+# Ignore output of webpack
+dist/
+
+# Ignore logs
+*.log
+
+# Ignore package-lock.json to avoid conflicts
+package-lock.json
+
+# Ignore any env files
+*.env
+
+# Ignore coverage directory created by nyc
+coverage/
+
+# Ignore .DS_Store on MacOS
+.DS_Store
