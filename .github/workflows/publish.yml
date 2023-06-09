@@ -43,6 +43,7 @@ jobs:
 
     - name: Publish to VSCode Marketplace
       run: vsce publish -p ${{ secrets.VSCE_PAT }}
+      continue-on-error: true
 
     - name: Create Release
       id: create_release
