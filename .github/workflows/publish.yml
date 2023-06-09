@@ -54,11 +54,11 @@ jobs:
         git config --global user.name "Fokklz"
         git checkout -b release-v${{ steps.package.outputs.version }}
         git tag v${{ steps.package.outputs.version }}
-        git push https://${{ secrets.G_PAT }}@github.com/${{ github.repository }} v${{ steps.package.outputs.version }}
+        git push https://${{ secrets.G_PAT }}@github.com/${{ github.repository }}.git v${{ steps.package.outputs.version }}
 
     - name: Delete the temporary branch
       run: |
-        git push https://${{ secrets.G_PAT }}@github.com/${{ github.repository }} origin --delete release-v${{ steps.package.outputs.version }}
+        git push https://${{ secrets.G_PAT }}@github.com/${{ github.repository }}.git origin --delete release-v${{ steps.package.outputs.version }}
 
 
 
