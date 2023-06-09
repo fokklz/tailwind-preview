@@ -63,6 +63,11 @@ jobs:
         git checkout main
         git branch -D release-v${{ steps.package.outputs.version }}
     
+    - name: Generate Changelog
+      id: changelog
+      run: |
+        echo "::set-output name=changelog::$(git log --merges --pretty=format:'- %b' v${{ steps.package.outputs.version }}..HEAD)"
+
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -71,6 +76,7 @@ jobs:
       with:
         tag_name: v${{ steps.package.outputs.version }}
         release_name: Release v${{ steps.package.outputs.version }}
+        body: ${{ steps.changelog.outputs.changelog }}
         draft: false
         prerelease: false
 
