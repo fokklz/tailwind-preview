@@ -34,11 +34,9 @@ jobs:
       run: npm test
 
     - name: Package extension
-      run: vsce package
       id: package
       env:
         PACKAGE_NAME: tailwind-preview.vsix
-      shell: bash
       run: |
         vsce package
         echo "::set-output name=vsix::$(ls *.vsix)"
