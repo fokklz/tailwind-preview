@@ -3,7 +3,7 @@
   "publisher": "Fokklz",
   "displayName": "Tailwind Preview",
   "description": "enhance your workflow when working with Tailwind CSS. It provides a live preview of your HTML code, including Tailwind CSS, allowing you to see changes in real-time as you work.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "pricing": "Free",
   "engines": {
     "vscode": "^1.78.0"
