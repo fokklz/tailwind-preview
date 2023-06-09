@@ -12,6 +12,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.G_PAT }}
 
     - name: Setup Node.js environment
       uses: actions/setup-node@v3
@@ -54,11 +56,10 @@ jobs:
         git config --global user.name "Fokklz"
         git checkout -b release-v${{ steps.package.outputs.version }}
         git tag v${{ steps.package.outputs.version }}
-        git push https://${{ secrets.G_PAT }}@github.com/${{ github.repository }}.git v${{ steps.package.outputs.version }}
-
+        git push origin v${{ steps.package.outputs.version }}
     - name: Delete the temporary branch
       run: |
-        git push https://${{ secrets.G_PAT }}@github.com/${{ github.repository }}.git origin --delete release-v${{ steps.package.outputs.version }}
-
+        git checkout main
+        git branch -D release-v${{ steps.package.outputs.version }}
 
 
