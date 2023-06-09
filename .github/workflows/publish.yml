@@ -43,7 +43,7 @@ jobs:
         vsce package
         VSIX_FILE=$(ls *.vsix)
         echo "::set-output name=vsix::${VSIX_FILE}"
-        VERSION=$(echo $VSIX_FILE | grep -oP '(?<=-).*(?=.vsix)')
+        VERSION=$(echo $VSIX_FILE | grep -oP '(?<=tailwind-preview-)\d+\.\d+\.\d+(?=.vsix)')
         echo "::set-output name=version::${VERSION}"
 
     - name: Publish to VSCode Marketplace

@@ -23,6 +23,15 @@ jobs:
         draft: false
         prerelease: false
 
+    - name: Package extension
+      id: package
+      env:
+        PACKAGE_NAME: tailwind-preview.vsix
+      run: |
+        vsce package
+        VSIX_FILE=$(ls *.vsix)
+        echo "::set-output name=vsix::${VSIX_FILE}"
+
     - name: Upload Release Asset
       id: upload-release-asset 
       uses: actions/upload-release-asset@v1
