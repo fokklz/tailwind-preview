@@ -39,7 +39,10 @@ jobs:
         PACKAGE_NAME: tailwind-preview.vsix
       run: |
         vsce package
-        echo "::set-output name=vsix::$(ls *.vsix)"
+        VSIX_FILE=$(ls *.vsix)
+        echo "::set-output name=vsix::${VSIX_FILE}"
+        VERSION=$(echo $VSIX_FILE | grep -oP '(?<=-).*(?=.vsix)')
+        echo "::set-output name=version::${VERSION}"
 
     - name: Publish to VSCode Marketplace
       run: vsce publish -p ${{ secrets.VSCE_PAT }}
@@ -47,5 +50,10 @@ jobs:
 
     - name: Create a new tag
       run: |
-        git tag v${{ steps.package.outputs.vsix }}
-        git push origin v${{ steps.package.outputs.vsix }}
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
+        git tag v${{ steps.package.outputs.version }}
+        git push origin v${{ steps.package.outputs.version }}
+      env:
+        GH_TOKEN: ${{ secrets.G_PAT }}
+
